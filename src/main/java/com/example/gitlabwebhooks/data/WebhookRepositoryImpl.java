@@ -13,13 +13,13 @@ public class WebhookRepositoryImpl implements WebhookRepository {
 
     @Override
     public void saveWebhookData(Webhook aWebhook) {
-        String saveWebhookInfoSQL = "INSERT INTO webhook (object_kind, event_name, before, after, ref, checkout_sha, user_id, user_username, project_id, total_commits_count) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String saveWebhookInfoSQL = "INSERT INTO webhook (object_kind, event_name, before_hash, after_hash, ref, checkout_sha, user_id, user_username, project_id, total_commits_count) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         webhookJdbcTemplate.update(
                 saveWebhookInfoSQL,
                 aWebhook.getObject_kind(),
                 aWebhook.getEvent_name(),
-                aWebhook.getBefore(),
-                aWebhook.getAfter(),
+                aWebhook.getBefore_hash(),
+                aWebhook.getAfter_hash(),
                 aWebhook.getRef(),
                 aWebhook.getCheckout_sha(),
                 aWebhook.getUser_id(),
