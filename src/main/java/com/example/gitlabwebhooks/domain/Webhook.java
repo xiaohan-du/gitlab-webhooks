@@ -11,8 +11,8 @@ public class Webhook {
     private Integer id;
     private String object_kind;
     private String event_name;
-    private String before;
-    private String after;
+    private String before_hash;
+    private String after_hash;
     private String ref;
     private String checkout_sha;
     private Integer user_id;
