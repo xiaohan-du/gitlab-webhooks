@@ -4,12 +4,18 @@ import com.example.gitlabwebhooks.domain.Webhook;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Repository
 public class WebhookRepositoryImpl implements WebhookRepository {
     private final JdbcTemplate webhookJdbcTemplate;
-    public WebhookRepositoryImpl(JdbcTemplate aWebhookJdbcTemplate) {
+    private final WebhookRepositorySpringDataJdbc webhookJdbcRepo;
+    public WebhookRepositoryImpl(JdbcTemplate aWebhookJdbcTemplate, WebhookRepositorySpringDataJdbc aWebhookRepositorySpringDataJdbc) {
+        this.webhookJdbcRepo = aWebhookRepositorySpringDataJdbc;
         this.webhookJdbcTemplate = aWebhookJdbcTemplate;
     }
+
 
     @Override
     public void saveWebhookData(Webhook aWebhook) {
@@ -27,5 +33,11 @@ public class WebhookRepositoryImpl implements WebhookRepository {
                 aWebhook.getProject_id(),
                 aWebhook.getTotal_commits_count()
         );
+    }
+    @Override
+    public List<Webhook> getWebhookData() {
+        List<Webhook> WebhookData = new ArrayList<>();
+        webhookJdbcRepo.findAll().forEach(WebhookData::add);
+        return WebhookData;
     }
 }
