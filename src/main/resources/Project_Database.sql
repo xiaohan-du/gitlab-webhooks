@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS webhook
     user_username VARCHAR(64),
     project_id INT(11),
     total_commits_count INT(11),
+    time_stamp VARCHAR(64),
     PRIMARY KEY (`id`)
     )
     engine = InnoDB;

@@ -29,7 +29,8 @@ public class WebhookServiceImpl implements WebhookService {
                 webhookDto.getUser_id(),
                 webhookDto.getUser_username(),
                 webhookDto.getProject_id(),
-                webhookDto.getTotal_commits_count()
+                webhookDto.getTotal_commits_count(),
+                webhookDto.getTime_stamp()
         );
         webhookRepository.saveWebhookData(webhook);
     }

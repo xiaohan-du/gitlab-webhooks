@@ -18,9 +18,10 @@ public class WebhookDto {
     private String user_username;
     private Integer project_id;
     private Integer total_commits_count;
+    private String time_stamp;
     public WebhookDto(String objectKind, String eventName, String beforeHash, String afterHash,
                       String ref, String checkoutSha, int userId, String userUsername,
-                      int projectId, int totalCommitsCount) {
+                      int projectId, int totalCommitsCount, String timeStamp) {
         this.id = nextId++;
         this.object_kind = objectKind;
         this.event_name = eventName;
@@ -32,5 +33,6 @@ public class WebhookDto {
         this.user_username = userUsername;
         this.project_id = projectId;
         this.total_commits_count = totalCommitsCount;
+        this.time_stamp = timeStamp;
     }
 }
