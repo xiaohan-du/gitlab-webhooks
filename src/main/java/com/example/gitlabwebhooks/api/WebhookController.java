@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.List;
 
 @RestController
@@ -23,6 +24,7 @@ public class WebhookController {
     @PostMapping
     public ResponseEntity<String> print(@RequestBody String requestBody) {
         JSONObject jsonObj = new JSONObject(requestBody);
+        String timestamp = Instant.now().toString();
         WebhookDto webhookDTO = new WebhookDto(
                 jsonObj.getString("object_kind"),
                 jsonObj.getString("event_name"),
@@ -33,7 +35,8 @@ public class WebhookController {
                 jsonObj.getInt("user_id"),
                 jsonObj.getString("user_username"),
                 jsonObj.getInt("project_id"),
-                jsonObj.getInt("total_commits_count")
+                jsonObj.getInt("total_commits_count"),
+                timestamp
         );
         webhookService.saveWebhookData(webhookDTO);
         return new ResponseEntity<>(requestBody, HttpStatus.OK);
