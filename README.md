@@ -1,5 +1,8 @@
 # Gitlab-webhooks
 
+## Start the project:
+* `cd` to `gitlab-webhooks`, bootRun. Then `cd` to `client`, `npm run dev` to start localhost:3000
+
 ## After every laptop restart, do the following:
 
 * Run Ngrok to generate a public URL for localhost: `ngrok http 8080`
