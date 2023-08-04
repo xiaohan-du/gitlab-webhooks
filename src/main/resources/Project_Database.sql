@@ -33,3 +33,29 @@ CREATE TABLE IF NOT EXISTS webhook
     PRIMARY KEY (`id`)
     )
     engine = InnoDB;
+
+
+DROP TABLE IF EXISTS project;
+
+-- -----------------------------------------------------
+-- Table project
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS project
+(
+    id int(11) NOT NULL,
+    homepage VARCHAR(64),
+    default_branch VARCHAR(64),
+    name VARCHAR(64),
+    ref VARCHAR(64),
+    description VARCHAR(64),
+    web_url VARCHAR(64),
+    git_ssh_url VARCHAR(64),
+    git_http_url VARCHAR(64),
+    visibility_level INT(11),
+    url VARCHAR(64),
+    ssh_url VARCHAR(64),
+    http_url VARCHAR(64),
+    PRIMARY KEY (`id`)
+    )
+    engine = InnoDB;

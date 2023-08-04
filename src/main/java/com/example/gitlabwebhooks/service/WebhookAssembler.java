@@ -22,7 +22,8 @@ public class WebhookAssembler {
                 webhook.getUser_username(),
                 webhook.getProject_id(),
                 webhook.getTotal_commits_count(),
-                webhook.getTime_stamp()
+                webhook.getTime_stamp(),
+                webhook.getProject()
         );
     }
 }

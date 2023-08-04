@@ -1,12 +1,13 @@
-package com.example.gitlabwebhooks.api.json;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Value;
+package com.example.gitlabwebhooks.domain;
 
-@Value
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+
+@Data
 @AllArgsConstructor
-@Builder(builderMethodName = "of")
-public class ProjectJson {
+public class Project {
+    @Id
     private Integer id;
     private String homepage;
     private String default_branch;

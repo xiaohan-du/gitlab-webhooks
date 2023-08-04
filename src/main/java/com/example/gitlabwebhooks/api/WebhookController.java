@@ -2,6 +2,7 @@ package com.example.gitlabwebhooks.api;
 
 import com.example.gitlabwebhooks.api.json.WebhookJson;
 import com.example.gitlabwebhooks.api.json.WebhookJsonAssembler;
+import com.example.gitlabwebhooks.domain.Project;
 import com.example.gitlabwebhooks.service.WebhookAssembler;
 import com.example.gitlabwebhooks.service.WebhookDto;
 import com.example.gitlabwebhooks.service.WebhookService;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -25,6 +27,22 @@ public class WebhookController {
     public ResponseEntity<String> print(@RequestBody String requestBody) {
         JSONObject jsonObj = new JSONObject(requestBody);
         String timestamp = Instant.now().toString();
+        Optional<JSONObject> projectObj = Optional.ofNullable(jsonObj.getJSONObject("project"));
+        Project project = projectObj.map(obj -> new Project(
+                obj.optInt("id"),
+                obj.optString("homepage", ""),
+                obj.optString("default_branch", ""),
+                obj.optString("name", ""),
+                obj.optString("ref", ""),
+                obj.optString("description", ""),
+                obj.optString("web_url", ""),
+                obj.optString("git_ssh_url", ""),
+                obj.optString("git_http_url", ""),
+                obj.optInt("visibility_level"),
+                obj.optString("url", ""),
+                obj.optString("ssh_url", ""),
+                obj.optString("http_url", "")
+        )).orElse(null);
         WebhookDto webhookDTO = new WebhookDto(
                 jsonObj.getString("object_kind"),
                 jsonObj.getString("event_name"),
@@ -36,7 +54,8 @@ public class WebhookController {
                 jsonObj.getString("user_username"),
                 jsonObj.getInt("project_id"),
                 jsonObj.getInt("total_commits_count"),
-                timestamp
+                timestamp,
+                project
         );
         webhookService.saveWebhookData(webhookDTO);
         return new ResponseEntity<>(requestBody, HttpStatus.OK);

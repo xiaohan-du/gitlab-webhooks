@@ -1,5 +1,6 @@
 package com.example.gitlabwebhooks.service;
 
+import com.example.gitlabwebhooks.domain.Project;
 import lombok.AllArgsConstructor;
 import lombok.Value;
 
@@ -19,9 +20,11 @@ public class WebhookDto {
     private Integer project_id;
     private Integer total_commits_count;
     private String time_stamp;
+
+    private Project project;
     public WebhookDto(String objectKind, String eventName, String beforeHash, String afterHash,
                       String ref, String checkoutSha, int userId, String userUsername,
-                      int projectId, int totalCommitsCount, String timeStamp) {
+                      int projectId, int totalCommitsCount, String timeStamp, Project project) {
         this.id = nextId++;
         this.object_kind = objectKind;
         this.event_name = eventName;
@@ -34,5 +37,6 @@ public class WebhookDto {
         this.project_id = projectId;
         this.total_commits_count = totalCommitsCount;
         this.time_stamp = timeStamp;
+        this.project = project;
     }
 }
