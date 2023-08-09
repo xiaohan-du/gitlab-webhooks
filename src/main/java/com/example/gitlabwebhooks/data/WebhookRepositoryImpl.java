@@ -43,7 +43,7 @@ public class WebhookRepositoryImpl implements WebhookRepository {
         );
 
         Optional<Project> projectOptional = Optional.ofNullable(aWebhook.getProject());
-        projectOptional.ifPresent(projectRepository::saveProjectData);
+        projectOptional.ifPresent(project -> projectRepository.saveProjectData(project, aWebhook.getId()));
     }
 
     @Override

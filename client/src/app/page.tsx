@@ -21,7 +21,7 @@ export default function Home() {
   }, []);
 
   const headers = Object.keys(webhookTableData[0] || {});
-  const rows = webhookTableData.map((data) => Object.values(data));
+  const rows = webhookTableData?.map((data) => Object.values(data));
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -36,7 +36,7 @@ export default function Home() {
         </tr>
         </thead>
         <tbody>
-        {rows.map((row, rowIndex) => (
+        {rows?.map((row, rowIndex) => (
           <tr key={rowIndex}>
             {row.map((cell, cellIndex) => (
               <td className='max-w-xxxs break-words border p-4 border-slate-400' key={cellIndex}>

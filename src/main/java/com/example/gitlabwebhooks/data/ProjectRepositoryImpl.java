@@ -14,10 +14,11 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     }
 
     @Override
-    public void saveProjectData(Project aProject) {
-        String saveProjectInfoSQL = "INSERT INTO project (id, homepage, default_branch, name, ref, description, web_url, git_ssh_url, git_http_url, visibility_level, url, ssh_url, http_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public void saveProjectData(Project aProject, Integer webhookId) {
+        String saveProjectInfoSQL = "INSERT INTO project (webhookId, id, homepage, default_branch, name, ref, description, web_url, git_ssh_url, git_http_url, visibility_level, url, ssh_url, http_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         projectJdbcTemplate.update(
                 saveProjectInfoSQL,
+                webhookId,
                 aProject.getId(),
                 aProject.getHomepage(),
                 aProject.getDefault_branch(),

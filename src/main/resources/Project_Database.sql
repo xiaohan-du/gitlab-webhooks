@@ -43,6 +43,7 @@ DROP TABLE IF EXISTS project;
 
 CREATE TABLE IF NOT EXISTS project
 (
+    webhookId int(11) NOT NULL,
     id int(11) NOT NULL,
     homepage VARCHAR(64),
     default_branch VARCHAR(64),
@@ -56,6 +57,6 @@ CREATE TABLE IF NOT EXISTS project
     url VARCHAR(64),
     ssh_url VARCHAR(64),
     http_url VARCHAR(64),
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`webhookId`)
     )
     engine = InnoDB;
