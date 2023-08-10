@@ -41,7 +41,9 @@ export default function Home() {
             {row.map((cell, cellIndex) => (
               <td className='max-w-xxxs break-words border p-4 border-slate-400' key={cellIndex}>
                 <div className="relative overflow-hidden truncate hover:overflow-visible">
-                  {cell}
+                  {
+                    String(cell)
+                  }
                   <div className="absolute inset-0 opacity-50 pointer-events-none"></div>
                 </div>
               </td>
