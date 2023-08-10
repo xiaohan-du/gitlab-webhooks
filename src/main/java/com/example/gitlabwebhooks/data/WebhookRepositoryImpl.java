@@ -48,8 +48,39 @@ public class WebhookRepositoryImpl implements WebhookRepository {
 
     @Override
     public List<Webhook> getWebhookData() {
-        List<Webhook> WebhookData = new ArrayList<>();
-        webhookJdbcRepo.findAll().forEach(WebhookData::add);
-        return WebhookData;
+        String query = "SELECT w.*, p.* FROM webhook w " + "LEFT JOIN project p ON w.id = p.webhookId";
+        List<Webhook> webhookData = webhookJdbcTemplate.query(query, (rs, rowNum) -> {
+            Webhook webhook = new Webhook(
+                    rs.getInt("id"),
+                    rs.getString("object_kind"),
+                    rs.getString("event_name"),
+                    rs.getString("before_hash"),
+                    rs.getString("after_hash"),
+                    rs.getString("ref"),
+                    rs.getString("checkout_sha"),
+                    rs.getInt("user_id"),
+                    rs.getString("user_username"),
+                    rs.getInt("project_id"),
+                    rs.getInt("total_commits_count"),
+                    rs.getString("time_stamp"),
+                    new Project(
+                            rs.getInt("id"),
+                            rs.getString("homepage"),
+                            rs.getString("default_branch"),
+                            rs.getString("name"),
+                            rs.getString("ref"),
+                            rs.getString("description"),
+                            rs.getString("web_url"),
+                            rs.getString("git_ssh_url"),
+                            rs.getString("git_http_url"),
+                            rs.getInt("visibility_level"),
+                            rs.getString("url"),
+                            rs.getString("ssh_url"),
+                            rs.getString("http_url")
+                    )
+            );
+            return webhook;
+        });
+        return webhookData;
     }
 }

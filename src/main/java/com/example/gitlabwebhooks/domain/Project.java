@@ -2,7 +2,6 @@ package com.example.gitlabwebhooks.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
 @Data
 @AllArgsConstructor
