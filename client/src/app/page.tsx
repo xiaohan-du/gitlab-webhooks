@@ -45,8 +45,11 @@ export default function Home() {
                 <div className="relative overflow-hidden truncate hover:overflow-visible">
                   {
                     cell !== null && typeof cell === 'object' ? (
-                      <button className='bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'
-                              onClick={() => setOpenModal(true)}>{String(cell.name)}</button>
+                      <>
+                        <button className='bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'
+                                onClick={() => setOpenModal(true)}>{String(cell.name)}</button>
+                        <Modal openModal={openModal} setOpenModal={setOpenModal} projectData={cell}/>
+                      </>
                     ) : (
                       String(cell)
                     )
@@ -59,8 +62,6 @@ export default function Home() {
         ))}
         </tbody>
       </table>
-
-      <Modal openModal={openModal} setOpenModal={setOpenModal}/>
       <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
       </div>
     </main>
