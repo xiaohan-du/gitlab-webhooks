@@ -1,8 +1,10 @@
 'use client';
 import { useEffect, useState } from "react";
+import Modal from "@/app/components/modal";
 
 export default function Home() {
   const [webhookTableData, setWebhookTableData] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
 
   async function getData() {
     const res = 'http://localhost:8080/api/webhook';
@@ -42,7 +44,12 @@ export default function Home() {
               <td className='max-w-xxxs break-words border p-4 border-slate-400' key={cellIndex}>
                 <div className="relative overflow-hidden truncate hover:overflow-visible">
                   {
-                    String(cell)
+                    cell !== null && typeof cell === 'object' ? (
+                      <button className='bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'
+                              onClick={() => setOpenModal(true)}>{String(cell.name)}</button>
+                    ) : (
+                      String(cell)
+                    )
                   }
                   <div className="absolute inset-0 opacity-50 pointer-events-none"></div>
                 </div>
@@ -53,6 +60,7 @@ export default function Home() {
         </tbody>
       </table>
 
+      <Modal openModal={openModal} setOpenModal={setOpenModal}/>
       <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
       </div>
     </main>

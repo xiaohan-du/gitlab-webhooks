@@ -44,6 +44,7 @@ public class WebhookController {
                 obj.optString("http_url", "")
         )).orElse(null);
         WebhookDto webhookDTO = new WebhookDto(
+                1,
                 jsonObj.getString("object_kind"),
                 jsonObj.getString("event_name"),
                 jsonObj.getString("before"),

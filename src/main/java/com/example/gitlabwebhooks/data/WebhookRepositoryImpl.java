@@ -41,14 +41,43 @@ public class WebhookRepositoryImpl implements WebhookRepository {
                 aWebhook.getTotal_commits_count(),
                 aWebhook.getTime_stamp()
         );
-
+        Integer lastWebhookId = getLatestWebhookId();
         Optional<Project> projectOptional = Optional.ofNullable(aWebhook.getProject());
-        projectOptional.ifPresent(project -> projectRepository.saveProjectData(project, aWebhook.getId()));
+        projectOptional.ifPresent(project -> projectRepository.saveProjectData(project, lastWebhookId));
+    }
+
+    private Integer getLatestWebhookId() {
+        String query = "SELECT * FROM webhook";
+
+        List<Webhook> webhookData = webhookJdbcTemplate.query(query, (rs, rowNum) -> {
+            Webhook webhook = new Webhook(
+                    rs.getInt("id"),
+                    rs.getString("object_kind"),
+                    rs.getString("event_name"),
+                    rs.getString("before_hash"),
+                    rs.getString("after_hash"),
+                    rs.getString("ref"),
+                    rs.getString("checkout_sha"),
+                    rs.getInt("user_id"),
+                    rs.getString("user_username"),
+                    rs.getInt("project_id"),
+                    rs.getInt("total_commits_count"),
+                    rs.getString("time_stamp"),
+                    null
+            );
+            return webhook;
+        });
+        if (!webhookData.isEmpty()) {
+            Webhook lastWebhook = webhookData.get(webhookData.size() - 1);
+            int lastWebhookId = lastWebhook.getId();
+            return lastWebhookId;
+        }
+        return null;
     }
 
     @Override
     public List<Webhook> getWebhookData() {
-        String query = "SELECT w.*, p.* FROM webhook w " + "LEFT JOIN project p ON w.id = p.webhookId";
+        String query = "SELECT w.*, p.* FROM webhook w LEFT JOIN project p ON w.id = p.webhookId";
         List<Webhook> webhookData = webhookJdbcTemplate.query(query, (rs, rowNum) -> {
             Webhook webhook = new Webhook(
                     rs.getInt("id"),
