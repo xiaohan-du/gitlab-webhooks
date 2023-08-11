@@ -20,4 +20,5 @@ public class Webhook {
     private Integer project_id;
     private Integer total_commits_count;
     private String time_stamp;
+    private Project project;
 }

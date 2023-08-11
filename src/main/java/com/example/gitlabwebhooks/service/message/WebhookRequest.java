@@ -1,5 +1,6 @@
 package com.example.gitlabwebhooks.service.message;
 
+import com.example.gitlabwebhooks.domain.Project;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;
@@ -22,4 +23,5 @@ public class WebhookRequest {
     private Integer project_id;
     private Integer total_commits_count;
     private String time_stamp;
+    private Project project;
 }

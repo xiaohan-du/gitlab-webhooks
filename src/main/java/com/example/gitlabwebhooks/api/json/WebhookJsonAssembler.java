@@ -20,6 +20,7 @@ public class WebhookJsonAssembler {
                 .project_id(webhookDto.getProject_id())
                 .total_commits_count(webhookDto.getTotal_commits_count())
                 .time_stamp(webhookDto.getTime_stamp())
+                .project(webhookDto.getProject())
                 .build();
     }
 

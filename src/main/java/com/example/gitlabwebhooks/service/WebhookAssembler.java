@@ -12,6 +12,7 @@ public class WebhookAssembler {
 
     public static WebhookDto toDto(Webhook webhook) {
         return new WebhookDto(
+                webhook.getId(),
                 webhook.getObject_kind(),
                 webhook.getEvent_name(),
                 webhook.getBefore_hash(),
@@ -22,7 +23,8 @@ public class WebhookAssembler {
                 webhook.getUser_username(),
                 webhook.getProject_id(),
                 webhook.getTotal_commits_count(),
-                webhook.getTime_stamp()
+                webhook.getTime_stamp(),
+                webhook.getProject()
         );
     }
 }
