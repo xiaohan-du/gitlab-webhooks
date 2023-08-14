@@ -14,15 +14,6 @@ public class WebhookAssembler {
         return new WebhookDto(
                 webhook.getId(),
                 webhook.getObject_kind(),
-                webhook.getEvent_name(),
-                webhook.getBefore_hash(),
-                webhook.getAfter_hash(),
-                webhook.getRef(),
-                webhook.getCheckout_sha(),
-                webhook.getUser_id(),
-                webhook.getUser_username(),
-                webhook.getProject_id(),
-                webhook.getTotal_commits_count(),
                 webhook.getTime_stamp(),
                 webhook.getProject()
         );

@@ -26,19 +26,10 @@ public class WebhookRepositoryImpl implements WebhookRepository {
     @Override
     @Transactional
     public void saveWebhookData(Webhook aWebhook) {
-        String saveWebhookInfoSQL = "INSERT INTO webhook (object_kind, event_name, before_hash, after_hash, ref, checkout_sha, user_id, user_username, project_id, total_commits_count, time_stamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String saveWebhookInfoSQL = "INSERT INTO webhook (object_kind, time_stamp) VALUES (?, ?)";
         webhookJdbcTemplate.update(
                 saveWebhookInfoSQL,
                 aWebhook.getObject_kind(),
-                aWebhook.getEvent_name(),
-                aWebhook.getBefore_hash(),
-                aWebhook.getAfter_hash(),
-                aWebhook.getRef(),
-                aWebhook.getCheckout_sha(),
-                aWebhook.getUser_id(),
-                aWebhook.getUser_username(),
-                aWebhook.getProject_id(),
-                aWebhook.getTotal_commits_count(),
                 aWebhook.getTime_stamp()
         );
         Integer lastWebhookId = getLatestWebhookId();
@@ -53,15 +44,6 @@ public class WebhookRepositoryImpl implements WebhookRepository {
             Webhook webhook = new Webhook(
                     rs.getInt("id"),
                     rs.getString("object_kind"),
-                    rs.getString("event_name"),
-                    rs.getString("before_hash"),
-                    rs.getString("after_hash"),
-                    rs.getString("ref"),
-                    rs.getString("checkout_sha"),
-                    rs.getInt("user_id"),
-                    rs.getString("user_username"),
-                    rs.getInt("project_id"),
-                    rs.getInt("total_commits_count"),
                     rs.getString("time_stamp"),
                     null
             );
@@ -82,15 +64,6 @@ public class WebhookRepositoryImpl implements WebhookRepository {
             Webhook webhook = new Webhook(
                     rs.getInt("id"),
                     rs.getString("object_kind"),
-                    rs.getString("event_name"),
-                    rs.getString("before_hash"),
-                    rs.getString("after_hash"),
-                    rs.getString("ref"),
-                    rs.getString("checkout_sha"),
-                    rs.getInt("user_id"),
-                    rs.getString("user_username"),
-                    rs.getInt("project_id"),
-                    rs.getInt("total_commits_count"),
                     rs.getString("time_stamp"),
                     new Project(
                             rs.getInt("id"),
