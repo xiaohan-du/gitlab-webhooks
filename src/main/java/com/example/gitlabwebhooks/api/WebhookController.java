@@ -46,15 +46,6 @@ public class WebhookController {
         WebhookDto webhookDTO = new WebhookDto(
                 1,
                 jsonObj.getString("object_kind"),
-                jsonObj.getString("event_name"),
-                jsonObj.getString("before"),
-                jsonObj.getString("after"),
-                jsonObj.getString("ref"),
-                jsonObj.isNull("checkout_sha") ? null : jsonObj.getString("checkout_sha"),
-                jsonObj.getInt("user_id"),
-                jsonObj.getString("user_username"),
-                jsonObj.getInt("project_id"),
-                jsonObj.getInt("total_commits_count"),
                 timestamp,
                 project
         );
