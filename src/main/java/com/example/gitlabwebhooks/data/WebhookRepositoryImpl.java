@@ -1,5 +1,6 @@
 package com.example.gitlabwebhooks.data;
 
+import com.example.gitlabwebhooks.domain.ObjectAttributes;
 import com.example.gitlabwebhooks.domain.Project;
 import com.example.gitlabwebhooks.domain.Webhook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ public class WebhookRepositoryImpl implements WebhookRepository {
     private final WebhookRepositorySpringDataJdbc webhookJdbcRepo;
     @Autowired
     private ProjectRepository projectRepository;
+    @Autowired
+    private ObjectAttributesRepository objectAttributesRepository;
     public WebhookRepositoryImpl(JdbcTemplate aWebhookJdbcTemplate, WebhookRepositorySpringDataJdbc aWebhookRepositorySpringDataJdbc) {
         this.webhookJdbcRepo = aWebhookRepositorySpringDataJdbc;
         this.webhookJdbcTemplate = aWebhookJdbcTemplate;
@@ -35,6 +38,8 @@ public class WebhookRepositoryImpl implements WebhookRepository {
         Integer lastWebhookId = getLatestWebhookId();
         Optional<Project> projectOptional = Optional.ofNullable(aWebhook.getProject());
         projectOptional.ifPresent(project -> projectRepository.saveProjectData(project, lastWebhookId));
+        Optional<ObjectAttributes> objectAttributesOptional = Optional.ofNullable(aWebhook.getObjectAttributes());
+        objectAttributesOptional.ifPresent(objectAttributes -> objectAttributesRepository.saveObjectAttributesData(objectAttributes, lastWebhookId));
     }
 
     private Integer getLatestWebhookId() {
@@ -45,6 +50,7 @@ public class WebhookRepositoryImpl implements WebhookRepository {
                     rs.getInt("id"),
                     rs.getString("object_kind"),
                     rs.getString("time_stamp"),
+                    null,
                     null
             );
             return webhook;
@@ -59,8 +65,21 @@ public class WebhookRepositoryImpl implements WebhookRepository {
 
     @Override
     public List<Webhook> getWebhookData() {
-        String query = "SELECT w.*, p.* FROM webhook w LEFT JOIN project p ON w.id = p.webhookId";
+        String query = "SELECT w.*, p.*, oa.* FROM webhook w LEFT JOIN project p ON w.id = p.webhookId LEFT JOIN object_attributes oa ON w.id = oa.webhookId";
         List<Webhook> webhookData = webhookJdbcTemplate.query(query, (rs, rowNum) -> {
+            ObjectAttributes objectAttributes = null;
+            if (!rs.wasNull()) {
+                objectAttributes = new ObjectAttributes(
+                        rs.getInt("id"),
+                        rs.getString("created_at"),
+                        rs.getString("updated_at"),
+                        rs.getString("description"),
+                        rs.getString("url"),
+                        rs.getInt("updated_by_id"),
+                        rs.getInt("author_id"),
+                        rs.getString("resolved_by_push")
+                );
+            }
             Webhook webhook = new Webhook(
                     rs.getInt("id"),
                     rs.getString("object_kind"),
@@ -79,7 +98,8 @@ public class WebhookRepositoryImpl implements WebhookRepository {
                             rs.getString("url"),
                             rs.getString("ssh_url"),
                             rs.getString("http_url")
-                    )
+                    ),
+                    objectAttributes
             );
             return webhook;
         });

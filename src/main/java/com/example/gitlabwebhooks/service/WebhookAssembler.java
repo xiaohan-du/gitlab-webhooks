@@ -15,7 +15,8 @@ public class WebhookAssembler {
                 webhook.getId(),
                 webhook.getObject_kind(),
                 webhook.getTime_stamp(),
-                webhook.getProject()
+                webhook.getProject(),
+                webhook.getObjectAttributes()
         );
     }
 }

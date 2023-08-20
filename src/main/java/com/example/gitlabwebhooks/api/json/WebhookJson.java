@@ -1,5 +1,6 @@
 package com.example.gitlabwebhooks.api.json;
 
+import com.example.gitlabwebhooks.domain.ObjectAttributes;
 import com.example.gitlabwebhooks.domain.Project;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,4 +13,5 @@ public class WebhookJson {
     private String object_kind;
     private String time_stamp;
     private Project project;
+    private ObjectAttributes objectAttributes;
 }

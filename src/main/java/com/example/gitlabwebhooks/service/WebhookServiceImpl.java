@@ -22,7 +22,8 @@ public class WebhookServiceImpl implements WebhookService {
                 webhookDto.getId(),
                 webhookDto.getObject_kind(),
                 webhookDto.getTime_stamp(),
-                webhookDto.getProject()
+                webhookDto.getProject(),
+                webhookDto.getObjectAttributes()
         );
         webhookRepository.saveWebhookData(webhook);
     }

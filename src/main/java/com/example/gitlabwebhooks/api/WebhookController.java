@@ -2,6 +2,7 @@ package com.example.gitlabwebhooks.api;
 
 import com.example.gitlabwebhooks.api.json.WebhookJson;
 import com.example.gitlabwebhooks.api.json.WebhookJsonAssembler;
+import com.example.gitlabwebhooks.domain.ObjectAttributes;
 import com.example.gitlabwebhooks.domain.Project;
 import com.example.gitlabwebhooks.service.WebhookAssembler;
 import com.example.gitlabwebhooks.service.WebhookDto;
@@ -28,6 +29,7 @@ public class WebhookController {
         JSONObject jsonObj = new JSONObject(requestBody);
         String timestamp = Instant.now().toString();
         Optional<JSONObject> projectObj = Optional.ofNullable(jsonObj.getJSONObject("project"));
+        Optional<JSONObject> objectAttributesObj = Optional.ofNullable(jsonObj.optJSONObject("object_attributes"));
         Project project = projectObj.map(obj -> new Project(
                 obj.optInt("id"),
                 obj.optString("homepage", ""),
@@ -43,11 +45,22 @@ public class WebhookController {
                 obj.optString("ssh_url", ""),
                 obj.optString("http_url", "")
         )).orElse(null);
+        ObjectAttributes objectAttributes = objectAttributesObj.map(obj -> new ObjectAttributes(
+                obj.optInt("id"),
+                obj.optString("created_at", ""),
+                obj.optString("updated_at", ""),
+                obj.optString("description", ""),
+                obj.optString("url", ""),
+                obj.optInt("updated_by_id"),
+                obj.optInt("author_id"),
+                obj.optString("resolved_by_push", "")
+        )).orElse(null);
         WebhookDto webhookDTO = new WebhookDto(
                 1,
                 jsonObj.getString("object_kind"),
                 timestamp,
-                project
+                project,
+                objectAttributes
         );
         webhookService.saveWebhookData(webhookDTO);
         return new ResponseEntity<>(requestBody, HttpStatus.OK);

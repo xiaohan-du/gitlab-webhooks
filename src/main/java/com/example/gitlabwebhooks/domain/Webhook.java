@@ -12,4 +12,5 @@ public class Webhook {
     private String object_kind;
     private String time_stamp;
     private Project project;
+    private ObjectAttributes objectAttributes;
 }
