@@ -1,5 +1,6 @@
 package com.example.gitlabwebhooks.service.message;
 
+import com.example.gitlabwebhooks.domain.ObjectAttributes;
 import com.example.gitlabwebhooks.domain.Project;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,4 +16,5 @@ public class WebhookRequest {
     private String object_kind;
     private String time_stamp;
     private Project project;
+    private ObjectAttributes objectAttributes;
 }

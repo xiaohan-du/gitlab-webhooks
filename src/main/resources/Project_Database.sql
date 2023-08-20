@@ -51,3 +51,24 @@ CREATE TABLE IF NOT EXISTS project
     PRIMARY KEY (`webhookId`)
     )
     engine = InnoDB;
+
+DROP TABLE IF EXISTS object_attributes;
+
+-- -----------------------------------------------------
+-- Table object_attributes
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS object_attributes
+(
+    webhookId int(11) NOT NULL,
+    id int(11) NOT NULL,
+    created_at VARCHAR(64),
+    updated_at VARCHAR(64),
+    description VARCHAR(64),
+    url TEXT,
+    updated_by_id INT(11),
+    author_id INT(11),
+    resolved_by_push VARCHAR(64),
+    PRIMARY KEY (`webhookId`)
+    )
+    engine = InnoDB;

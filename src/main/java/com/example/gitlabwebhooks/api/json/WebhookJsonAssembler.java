@@ -12,6 +12,7 @@ public class WebhookJsonAssembler {
                 .object_kind(webhookDto.getObject_kind())
                 .time_stamp(webhookDto.getTime_stamp())
                 .project(webhookDto.getProject())
+                .objectAttributes(webhookDto.getObjectAttributes())
                 .build();
     }
 
