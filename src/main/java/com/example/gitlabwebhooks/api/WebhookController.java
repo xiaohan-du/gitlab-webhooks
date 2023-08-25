@@ -25,7 +25,7 @@ public class WebhookController {
     private WebhookService webhookService;
     public WebhookController(WebhookService webhookService) { this.webhookService = webhookService; };
     @PostMapping
-    public ResponseEntity<String> print(@RequestBody String requestBody) {
+    public ResponseEntity<String> save(@RequestBody String requestBody) {
         JSONObject jsonObj = new JSONObject(requestBody);
         String timestamp = Instant.now().toString();
         Optional<JSONObject> projectObj = Optional.ofNullable(jsonObj.getJSONObject("project"));
