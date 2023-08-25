@@ -14,13 +14,12 @@ public class ObjectAttributesRepositoryImpl implements ObjectAttributesRepositor
     }
 
     @Override
-    public void saveObjectAttributesData(ObjectAttributes aObjectAttributes, Integer webhookId) {
-        System.out.println("11111111111" + aObjectAttributes.getUrl());
-        String saveObjectAttributesInfoSQL = "INSERT INTO object_attributes (webhookId, id, created_at, updated_at, description, url, updated_by_id, author_id, resolved_by_push) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public void saveObjectAttributesData(ObjectAttributes aObjectAttributes, Integer webhook_id) {
+        String saveObjectAttributesInfoSQL = "INSERT INTO object_attributes (webhook_id, object_attributes_id, created_at, updated_at, description, url, updated_by_id, author_id, resolved_by_push) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         objectAttributesJdbcTemplate.update(
                 saveObjectAttributesInfoSQL,
-                webhookId,
-                aObjectAttributes.getId(),
+                webhook_id,
+                aObjectAttributes.getObject_attributes_id(),
                 aObjectAttributes.getCreated_at(),
                 aObjectAttributes.getUpdated_at(),
                 aObjectAttributes.getDescription(),

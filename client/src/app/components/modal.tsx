@@ -33,9 +33,6 @@ export default function Modal( {openModal, setOpenModal, projectData} ) {
                 <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                   <div className="sm:flex sm:items-start">
                     <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                      <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
-                        Project {projectData.name}:
-                      </Dialog.Title>
                       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <tbody>
                         {Object.keys(projectData).map((header, index) => (

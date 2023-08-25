@@ -34,8 +34,8 @@ DROP TABLE IF EXISTS project;
 
 CREATE TABLE IF NOT EXISTS project
 (
-    webhookId int(11) NOT NULL,
-    id int(11) NOT NULL,
+    webhook_id int(11) NOT NULL,
+    project_id int(11) NOT NULL,
     homepage VARCHAR(64),
     default_branch VARCHAR(64),
     name VARCHAR(64),
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS project
     url VARCHAR(64),
     ssh_url VARCHAR(64),
     http_url VARCHAR(64),
-    PRIMARY KEY (`webhookId`)
+    PRIMARY KEY (`webhook_id`)
     )
     engine = InnoDB;
 
@@ -60,8 +60,8 @@ DROP TABLE IF EXISTS object_attributes;
 
 CREATE TABLE IF NOT EXISTS object_attributes
 (
-    webhookId int(11) NOT NULL,
-    id int(11) NOT NULL,
+    webhook_id int(11) NOT NULL,
+    object_attributes_id int(11) NOT NULL,
     created_at VARCHAR(64),
     updated_at VARCHAR(64),
     description VARCHAR(64),
@@ -69,6 +69,6 @@ CREATE TABLE IF NOT EXISTS object_attributes
     updated_by_id INT(11),
     author_id INT(11),
     resolved_by_push VARCHAR(64),
-    PRIMARY KEY (`webhookId`)
+    PRIMARY KEY (`webhook_id`)
     )
     engine = InnoDB;

@@ -65,12 +65,12 @@ public class WebhookRepositoryImpl implements WebhookRepository {
 
     @Override
     public List<Webhook> getWebhookData() {
-        String query = "SELECT w.*, p.*, oa.* FROM webhook w LEFT JOIN project p ON w.id = p.webhookId LEFT JOIN object_attributes oa ON w.id = oa.webhookId";
+        String query = "SELECT w.*, p.*, oa.* FROM webhook w LEFT JOIN project p ON w.id = p.webhook_id LEFT JOIN object_attributes oa ON w.id = oa.webhook_id";
         List<Webhook> webhookData = webhookJdbcTemplate.query(query, (rs, rowNum) -> {
             ObjectAttributes objectAttributes = null;
             if (!rs.wasNull()) {
                 objectAttributes = new ObjectAttributes(
-                        rs.getInt("id"),
+                        rs.getInt("object_attributes_id"),
                         rs.getString("created_at"),
                         rs.getString("updated_at"),
                         rs.getString("description"),
@@ -85,7 +85,7 @@ public class WebhookRepositoryImpl implements WebhookRepository {
                     rs.getString("object_kind"),
                     rs.getString("time_stamp"),
                     new Project(
-                            rs.getInt("id"),
+                            rs.getInt("project_id"),
                             rs.getString("homepage"),
                             rs.getString("default_branch"),
                             rs.getString("name"),

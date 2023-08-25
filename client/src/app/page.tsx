@@ -1,10 +1,11 @@
 'use client';
 import { useEffect, useState } from "react";
 import Modal from "@/app/components/modal";
+import { useModalState } from "@/app/components/modal.state";
 
 export default function Home() {
   const [webhookTableData, setWebhookTableData] = useState([]);
-  const [openModal, setOpenModal] = useState(false);
+  const { openModal, setOpenModal, modalContent, setModalContent } = useModalState();
 
   async function getData() {
     const res = 'http://localhost:8080/api/webhook';
@@ -25,6 +26,11 @@ export default function Home() {
   const headers = Object.keys(webhookTableData[0] || {});
   const rows = webhookTableData?.map((data) => Object.values(data));
 
+  const handleCellClick = (cellData) => {
+    setModalContent(cellData);
+    setOpenModal(true);
+  };
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <h1
@@ -43,16 +49,15 @@ export default function Home() {
             {row.map((cell, cellIndex) => (
               <td className='max-w-xxxs break-words border p-4 border-slate-400' key={cellIndex}>
                 <div className="relative overflow-hidden truncate hover:overflow-visible">
-                  {
-                    cell !== null && typeof cell === 'object' ? (
-                      <>
-                        <button className='bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'
-                                onClick={() => setOpenModal(true)}>{String(cell.name)}</button>
-                        <Modal openModal={openModal} setOpenModal={setOpenModal} projectData={cell}/>
-                      </>
-                    ) : (
-                      String(cell)
-                    )
+                  {cell !== null && typeof cell === 'object' ? (
+                    <button
+                      className='bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'
+                      onClick={() => handleCellClick(cell)}
+                    >
+                      {String(cell.project_id || cell.object_attributes_id)}
+                    </button>
+                  )
+                  : String(cell)
                   }
                   <div className="absolute inset-0 opacity-50 pointer-events-none"></div>
                 </div>
@@ -62,6 +67,7 @@ export default function Home() {
         ))}
         </tbody>
       </table>
+      {openModal && <Modal openModal={openModal} setOpenModal={setOpenModal} projectData={modalContent} />}
       <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
       </div>
     </main>
