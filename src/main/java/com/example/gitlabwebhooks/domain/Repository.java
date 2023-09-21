@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MergeParams {
-    private Boolean should_remove_source_branch;
-    private Integer force_remove_source_branch;
+public class Repository {
+    private String name;
+    private String description;
+    private String url;
+    private String homepage;
 }

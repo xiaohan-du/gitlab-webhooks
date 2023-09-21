@@ -42,7 +42,7 @@ export default function Modal( {openModal, setOpenModal, projectData} ) {
                                 {String(header)}
                               </div>
                             </td>
-                            <td className='max-w-xxxs break-words border p-2 border-slate-400'>
+                            <td className='break-words border p-2 border-slate-400'>
                               <div className="relative overflow-hidden truncate hover:overflow-visible">
                                 {String(projectData[header])}
                               </div>
