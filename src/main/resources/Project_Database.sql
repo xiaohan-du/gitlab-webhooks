@@ -83,7 +83,7 @@ DROP TABLE IF EXISTS author;
 
 CREATE TABLE IF NOT EXISTS author
 (
-    webhook_id int(11) NOT NULL,
+    merge_request_id int(11) NOT NULL,
     name VARCHAR(255),
     email VARCHAR(255),
     PRIMARY KEY (`webhook_id`)
@@ -99,7 +99,7 @@ DROP TABLE IF EXISTS last_commit;
 
 CREATE TABLE IF NOT EXISTS last_commit
 (
-    webhook_id int(11) NOT NULL,
+    merge_request_id int(11) NOT NULL,
     last_commit_id int(11),
     author VARCHAR(255),
     message VARCHAR(255),
@@ -119,7 +119,7 @@ DROP TABLE IF EXISTS merge_params;
 
 CREATE TABLE IF NOT EXISTS merge_params
 (
-    webhook_id int(11) NOT NULL,
+    merge_request_id int(11) NOT NULL,
     merge_params_id int(11),
     should_remove_source_branch TINYINT(1),
     force_remove_source_branch int(11),
@@ -136,7 +136,7 @@ DROP TABLE IF EXISTS repository;
 
 CREATE TABLE IF NOT EXISTS repository
 (
-    webhook_id int(11) NOT NULL,
+    merge_request_id int(11) NOT NULL,
     repository_id int(11),
     name VARCHAR(255),
     description VARCHAR(255),
@@ -155,7 +155,7 @@ DROP TABLE IF EXISTS source;
 
 CREATE TABLE IF NOT EXISTS source
 (
-    webhook_id int(11) NOT NULL,
+    merge_request_id int(11) NOT NULL,
     source_id int(11),
     path_with_namespace VARCHAR(255),
     ssh_url VARCHAR(255),
@@ -185,7 +185,7 @@ DROP TABLE IF EXISTS target;
 
 CREATE TABLE IF NOT EXISTS target
 (
-    webhook_id int(11) NOT NULL,
+    merge_request_id int(11) NOT NULL,
     target_id int(11),
     path_with_namespace VARCHAR(255),
     ssh_url VARCHAR(255),
@@ -215,7 +215,7 @@ DROP TABLE IF EXISTS user;
 
 CREATE TABLE IF NOT EXISTS user
 (
-    webhook_id int(11) NOT NULL,
+    merge_request_id int(11) NOT NULL,
     user_id int(11),
     avatar_url VARCHAR(255),
     email VARCHAR(255),
@@ -233,8 +233,8 @@ DROP TABLE IF EXISTS merge_request_object_attributes;
 
 CREATE TABLE IF NOT EXISTS merge_request_object_attributes
 (
-    webhook_id int(11) NOT NULL,
-    object_attributes_id int(11),
+    merge_request_id int(11) NOT NULL,
+    merge_request_object_attributes_id int(11),
     merge_when_pipeline_succeeds TINYINT(1),
     last_commit_id int(11),
     detailed_merge_status VARCHAR(255),
@@ -247,7 +247,7 @@ CREATE TABLE IF NOT EXISTS merge_request_object_attributes
     merge_params_id int(11),
     target_id int(11),
     PRIMARY KEY (`webhook_id`),
-    FOREIGN KEY (`object_attributes_id`) REFERENCES `object_attributes`(`webhook_id`),
+    FOREIGN KEY (`merge_request_object_attributes_id`) REFERENCES `object_attributes`(`webhook_id`),
     FOREIGN KEY (`last_commit_id`) REFERENCES `last_commit`(`webhook_id`),
     FOREIGN KEY (`source_id`) REFERENCES `source`(`webhook_id`),
     FOREIGN KEY (`merge_params_id`) REFERENCES `merge_params`(`webhook_id`),

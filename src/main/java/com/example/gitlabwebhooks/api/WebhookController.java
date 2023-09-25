@@ -3,7 +3,7 @@ package com.example.gitlabwebhooks.api;
 import com.example.gitlabwebhooks.api.json.WebhookJson;
 import com.example.gitlabwebhooks.api.json.WebhookJsonAssembler;
 import com.example.gitlabwebhooks.domain.*;
-import com.example.gitlabwebhooks.service.WebhookAssembler;
+import com.example.gitlabwebhooks.service.MergeRequestDto;
 import com.example.gitlabwebhooks.service.WebhookDto;
 import com.example.gitlabwebhooks.service.WebhookService;
 import com.example.gitlabwebhooks.service.message.WebhookRequest;
@@ -58,17 +58,23 @@ public class WebhookController {
         Optional<JSONObject> mergeRequest;
         if (objectKind.equals("merge_request")) {
             mergeRequest = Optional.ofNullable(jsonObj);
+            MergeRequestObjectAttributes attributes = new MergeRequestObjectAttributes();
+            Author author = new Author();
+            LastCommit lastCommit = new LastCommit();
+            Source source = new Source();
+            MergeParams mergeParams = new MergeParams();
+            Target target = new Target();
+            Repository repository = new Repository();
+            User user = new User();
             mergeRequest.map(obj -> {
-              Integer mergeRequestId = obj.optInt("id");
-                MergeRequestObjectAttributes attributes = new MergeRequestObjectAttributes();
+
                 attributes.setMerge_when_pipeline_succeeds(obj.optBoolean("merge_when_pipeline_succeeds"));
                 JSONObject mergeReqObjAttr = obj.getJSONObject("object_attributes");
-                Author author = new Author();
+
                 JSONObject authorJson = mergeReqObjAttr.getJSONObject("last_commit").getJSONObject("author");
                 author.setName(authorJson.optString("name"));
                 author.setEmail(authorJson.optString("email"));
 
-                LastCommit lastCommit = new LastCommit();
                 JSONObject lastCommitJson = mergeReqObjAttr.getJSONObject("last_commit");
                 lastCommit.setLast_commit_id(lastCommitJson.optString("id"));
                 lastCommit.setAuthor(author);
@@ -84,8 +90,8 @@ public class WebhookController {
                 attributes.setMilestone_id(mergeReqObjAttr.optString("milestone_id"));
                 attributes.setCreated_at(mergeReqObjAttr.optString("created_at"));
                 attributes.setDescription(mergeReqObjAttr.optString("description"));
+                attributes.setObject_attributes_id(mergeReqObjAttr.optInt("id"));
 
-                Source source = new Source();
                 JSONObject sourceJson = mergeReqObjAttr.getJSONObject("source");
                 source.setSource_id(sourceJson.optInt("source_id"));
                 source.setPath_with_namespace(sourceJson.optString("path_with_namespace"));
@@ -106,14 +112,11 @@ public class WebhookController {
 
                 attributes.setSource(source);
 
-                MergeParams mergeParams = new MergeParams();
-
                 mergeParams.setShould_remove_source_branch(obj.optBoolean("should_remove_source_branch"));
                 mergeParams.setForce_remove_source_branch(obj.optInt("force_remove_source_branch"));
 
                 attributes.setMerge_params(mergeParams);
 
-                Target target = new Target();
                 JSONObject targetJson = mergeReqObjAttr.getJSONObject("target");
                 target.setTarget_id(targetJson.optInt("target_id"));
                 target.setPath_with_namespace(targetJson.optString("path_with_namespace"));
@@ -133,16 +136,15 @@ public class WebhookController {
                 target.setHomepage(targetJson.optString("homepage"));
 
                 attributes.setTarget(target);
-                String changes = obj.optString("changes");
 
-                Repository repository = new Repository();
+
                 JSONObject repositoryJson = obj.getJSONObject("repository");
                 repository.setName(repositoryJson.optString("name"));
                 repository.setDescription(repositoryJson.optString("description"));
                 repository.setUrl(repositoryJson.optString("url"));
                 repository.setHomepage(repositoryJson.optString("homepage"));
 
-                User user = new User();
+
                 JSONObject userJson = obj.getJSONObject("user");
                 user.setUser_id(userJson.optInt("id"));
                 user.setAvatar_url(userJson.optString("avatar_url"));
@@ -150,8 +152,18 @@ public class WebhookController {
                 user.setEmail(userJson.optString("email"));
                 user.setUsername(userJson.optString("username"));
 
-              return new MergeRequest(mergeRequestId, attributes, changes, project, repository, user, objectKind);
+              return null;
             }).orElse(null);
+
+            MergeRequestDto mergeRequestDto = new MergeRequestDto(
+                    jsonObj.optInt("merge_request_id"),
+                    attributes,
+                    jsonObj.optString("changes"),
+                    project,
+                    repository,
+                    user,
+                    objectKind
+            );
         }
 
         WebhookDto webhookDTO = new WebhookDto(
