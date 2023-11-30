@@ -1,4 +1,8 @@
 # Gitlab-webhooks
+## Idea:
+Build a service to monitor users' Gitlab repository activities using Gitlab Webhooks
+
+## Architecture:
 
 ## Start the project:
 * `cd` to `gitlab-webhooks`, bootRun. Then `cd` to `client`, `npm run dev` to start localhost:3000
